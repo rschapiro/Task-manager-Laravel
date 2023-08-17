@@ -40,8 +40,6 @@ class TaskController extends Controller
             'description' => 'required'
         ]);
 
-        // NU tilføjer jeg en ekstra linje her for sjovs skyld og narrestreger
-
         // From YouTube with Søren Spangsberg Jørgensen
         // Task::create($request->all());
         Task::create($data);
