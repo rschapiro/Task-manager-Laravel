@@ -1,15 +1,4 @@
-@extends('tasks.layout')
-
-@section('content')
-
-<h1>Create Task...</h1>
-
-@endsection
-
-
-
-
-{{-- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -40,4 +29,4 @@
         </div>
     </form>
 </body>
-</html> --}}
+</html>
