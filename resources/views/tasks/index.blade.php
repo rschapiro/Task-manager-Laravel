@@ -1,51 +1,50 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-    <link href="/bootstrap-5.3.1-dist/css/bootstrap.css" rel="stylesheet">
-</head>
-<body>
-    <h1>Tasks</h1>
-    <div>
-        <table border="1">
-            <tr>
-                <th>ID</th>
-                <th>Title</th>
-                <th>Description</th>
-                <th>Completed</th>
-                <th>Edit</th>
-            </tr>
-            @if (count($tasks) > 0)            
-            @foreach($tasks as $task)
-                <tr>
-                    <td>{{$task->id}}</td>
-                    <td>{{$task->title}}</td>
-                    <td>{{$task->description}}</td>
-                    <td>{{$task->completed}}</td>
-                    <td>
-                        <a href="{{route('task.edit', $task->id)}}">Edit</a>
-                    </td>
-                    <td>
-                        <form method="POST" action="{{ route('task.destroy', ['task' => $task]) }}">
-                            @csrf
-                            <input type="submit" value="Delete"/>
-                        </form>
-                    </td>
-                </tr>
-            @endforeach
-            @else
-            <tr>
-                <td colspan="6">
-                    No data found...
-                </td>
-            </tr>
-            @endif
-        </table>
-    </div>
+@extends('tasks.layout')
 
-    <script src="/bootstrap-5.3.1-dist/js/bootstrap.js"></script>
-</body>
-</html>
+@section('content')
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="pull-left">
+            <h2>Tasks</h2>
+        </div>
+        <div class="pull-right">
+            <a class="btn btn-success" href="{{ route('task.create') }}">Add New Task</a>
+        </div>
+    </div>
+</div>
+
+@if ($message = Session::get('success'))
+    <div class="alert alert-success">
+        <p>{{ $message }}</p>
+    </div>
+@endif
+
+<table class="table table-bordered">
+    <tr>
+        <th>ID</th>
+        <th>Title</th>
+        <th>Description</th>
+        <th width="280px">Action</th>
+    </tr>
+    @foreach ($tasks as $task)
+    <tr>
+        <td>{{ $task->id }}</td>
+        <td>{{ $task->title }}</td>
+        <td>{{ $task->description }}</td>
+        <td>
+            <form action="{{ route('task.destroy', $task->id) }}" method="POST">
+                <a class="btn btn-info" href="{{ route('task.show', $task->id) }}">Show</a>
+                <a class="btn btn-primary" href="{{ route('task.edit', $task->id) }}">Edit</a>
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="btn btn-danger">Delete</button>
+            </form>
+        </td>
+    </tr>
+    @endforeach
+</table>
+
+
+
+
+@endsection
