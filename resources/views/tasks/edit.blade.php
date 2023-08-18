@@ -1,41 +1,49 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-<body>
-    <h1>Edit Task</h1>
-    <div>
-        {{-- @if($errors->any())
+@extends('tasks.layout')
+
+@section('content')
+
+<div class="row">
+    <div class="col-lg-12 margin-tb">
+        <div class="pull-left">
+            <h2>Edit Task</h2>
+        </div>
+        <div class="pull-right">
+            <a class="btn btn-primary" href="{{ route('task.index') }}">Back</a>
+        </div>
+    </div>
+</div>
+
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <strong>Whoops!</strong> There were some problems with your input.<br><br>
         <ul>
-            @foreach($errors->all() as $error)
-                <li>{{$error}}</li>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
             @endforeach
         </ul>
-        @endif --}}
     </div>
-    <form method="POST" action="{{ route('task.update', $task->id) }}">
-        @csrf
-        <div>
-            <label>Title</label>
-            <input type="text" name="title" placeholder="Title" value="{{$task->title}}"/>
-            {{-- <span>
-                {{ $errors->first('title') }}
-            </span> --}}
+@endif
+
+<form action="{{ route('task.update', $task->id) }}" method="POST">
+    @csrf
+
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="form-group">
+                <strong>Title:</strong>
+                <input type="text" name="title" value="{{ $task->title }}" class="form-control" placeholder="Title">
+            </div>
         </div>
-        <div>
-            <label>Description</label>
-            <input type="text" name="description" placeholder="Description" value="{{$task->description}}"/>
-            {{-- <span>
-                {{ $errors->first('description') }}
-            </span> --}}
+        <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="form-group">
+                <strong>Description:</strong>
+                <textarea class="form-control" style="height:150px" name="description" placeholder="Description">{{ $task->description }}</textarea>
+            </div>
         </div>
-        <div>
-            <input type="submit" value="Update Task"/>
+        <div class="col-xs-12 col-sm-12 col-md-12 text-center">
+            <button type="submit" class="btn btn-primary">Submit</button>
         </div>
-    </form>
-</body>
-</html>
+    </div>
+</form>
+
+@endsection
