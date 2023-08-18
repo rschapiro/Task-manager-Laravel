@@ -14,9 +14,9 @@ class TaskController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(){
-        $tasks = Task::all();
+        $tasks = Task::latest()->paginate(5);
         // return view('tasks.index', ['tasks' => $tasks]);
-        return view('tasks.index', compact('tasks'));
+        return view('tasks.index', compact('tasks'))->with(request()->input('page'));
     }
 
     /**
