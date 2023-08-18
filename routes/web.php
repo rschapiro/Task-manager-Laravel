@@ -20,7 +20,7 @@ Route::get('/', function () {
 
 Route::prefix('tasks')->group(function(){
     Route::get('list', [TaskController::class, 'index'])->name('task.index');
-    Route::get('create', [TaskController::class, 'create']);
+    Route::get('create', [TaskController::class, 'create'])->name('task.create');
     Route::post('save', [TaskController::class, 'store'])->name('task.store');
     Route::get('edit/{id}', [TaskController::class, 'edit'])->name('task.edit');
     Route::post('update/{id}', [TaskController::class, 'update'])->name('task.update');

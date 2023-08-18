@@ -24,7 +24,7 @@
     </div>
 @endif
 
-<form method="POST" action="{{ route('task.store') }}">
+<form action="{{ route('task.store') }}" method="POST">
     @csrf
 
     <div class="row">
