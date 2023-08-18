@@ -33,7 +33,7 @@
         <td>{{ $task->description }}</td>
         <td>
             <form action="{{ route('task.destroy', $task->id) }}" method="POST">
-                {{-- <a class="btn btn-info" href="{{ route('task.show', $task->id) }}">Show</a> --}}
+                <a class="btn btn-info" href="{{ route('task.show', $task->id) }}">Show</a>
                 <a class="btn btn-primary" href="{{ route('task.edit', $task->id) }}">Edit</a>
                 @csrf
                 @method('DELETE')
