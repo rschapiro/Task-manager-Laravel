@@ -26,6 +26,7 @@
         <th>Description</th>
         <th width="280px">Action</th>
     </tr>
+    @if (count($tasks) > 0)
     @foreach ($tasks as $task)
     <tr>
         <td>{{ $task->id }}</td>
@@ -42,6 +43,13 @@
         </td>
     </tr>
     @endforeach
+    @else
+    <tr>
+        <td colspan="6">
+            No data found...
+        </td>
+    </tr>
+    @endif
 </table>
 
 
