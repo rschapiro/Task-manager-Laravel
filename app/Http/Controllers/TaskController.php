@@ -53,11 +53,11 @@ class TaskController extends Controller
      * @param \App\Models\Task $task
      * @return \Illuminate\Http\Response
      */
-    public function show($taskId)
-    {
-        $task = Task::where('id', $taskId)->first();
-        return view('task.show', ['task' => $task]);
-    }
+    // public function show($taskId)
+    // {
+    //     $task = Task::where('id', $taskId)->first();
+    //     return view('task.show', ['task' => $task]);
+    // }
 
     /**
      * Show the form for editing the specified resource.
@@ -114,5 +114,20 @@ class TaskController extends Controller
         $task->delete();
 
         return redirect()->route('task.index')->with('success', 'Task deleted successfully');
+    }
+
+    public function complete(Request $request, $id)
+    {
+        Task::where('id', $id)->update(['completed' => 1]);
+
+        // TESTING:
+        // dd(Task::where('id', $id)->first()->toSql());
+
+        // Alternative way of writing line 121:
+        // $task = Task::findOrFail($id);
+        // $task->completed = 1;
+        // $task->save();
+
+        return redirect()->back()->with('success', 'Task completed successfully');
     }
 }
