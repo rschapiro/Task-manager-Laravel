@@ -45,7 +45,7 @@
             <form action="{{ route('task.complete', $task->id) }}" method="POST">
                 @csrf
                 <input type="checkbox" {{ $task->completed ? 'checked disabled' : '' }}>
-                <button type="submit">Complete Task</button>
+                <button type="submit" class="btn btn-success">Complete</button>
             </form>
         </td>
     </tr>
