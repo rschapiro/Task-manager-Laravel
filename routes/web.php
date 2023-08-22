@@ -22,3 +22,14 @@ Route::get('/dashboard', function () {
 })->middleware(['auth'])->name('dashboard');
 
 require __DIR__.'/auth.php';
+
+Route::prefix('tasks')->group(function(){
+    Route::get('list', [TaskController::class, 'index'])->name('task.index');
+    Route::get('create', [TaskController::class, 'create'])->name('task.create');
+    Route::post('save', [TaskController::class, 'store'])->name('task.store');
+    // Route::get('{id}', [TaskController::class], 'show')->name('task.show');
+    Route::get('edit/{id}', [TaskController::class, 'edit'])->name('task.edit');
+    Route::post('update/{id}', [TaskController::class, 'update'])->name('task.update');
+    Route::post('{task}/destroy', [TaskController::class, 'destroy'])->name('task.destroy');
+    Route::post('complete-task/{id}', [TaskController::class, 'setStatus'])->name('task.complete');
+});
