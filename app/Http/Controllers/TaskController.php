@@ -53,11 +53,11 @@ class TaskController extends Controller
      * @param \App\Models\Task $task
      * @return \Illuminate\Http\Response
      */
-    // public function show($taskId)
-    // {
-    //     $task = Task::where('id', $taskId)->first();
-    //     return view('task.show', ['task' => $task]);
-    // }
+    public function show($taskId)
+    {
+        $task = Task::where('id', $taskId)->first();
+        return view('tasks.show', ['task' => $task]);
+    }
 
     /**
      * Show the form for editing the specified resource.
