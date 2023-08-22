@@ -43,7 +43,7 @@
         </td>
         <td>
             {{ $task->completed ? 'Completed' : 'Not Completed' }}
-            <form action="{{ route('task.complete', $task->id) }}" method="POST">
+            <form action="{{ route('task.setStatus', $task->id) }}" method="POST">
                 @csrf
                 <input type="hidden" name="is_completed" value="{{ $task->completed }}">
                 <button type="submit" class="btn btn-{{ $task->completed ? 'success' : 'warning' }}">Set status</button>
