@@ -26,7 +26,7 @@ Route::prefix('tasks')->group(function(){
     Route::get('edit/{id}', [TaskController::class, 'edit'])->name('task.edit');
     Route::post('update/{id}', [TaskController::class, 'update'])->name('task.update');
     Route::post('{task}/destroy', [TaskController::class, 'destroy'])->name('task.destroy');
-    Route::post('complete-task/{id}', [TaskController::class, 'complete'])->name('task.complete');
+    Route::post('complete-task/{id}', [TaskController::class, 'setStatus'])->name('task.complete');
 });
 
 
