@@ -42,10 +42,11 @@
             </form>
         </td>
         <td>
+            {{ $task->completed ? 'Completed' : 'Not Completed' }}
             <form action="{{ route('task.complete', $task->id) }}" method="POST">
                 @csrf
-                <input type="checkbox" {{ $task->completed ? 'checked disabled' : '' }}>
-                <button type="submit" class="btn btn-success">Complete</button>
+                <input type="hidden" name="is_completed" value="{{ $task->completed }}">
+                <button type="submit" class="btn btn-{{ $task->completed ? 'success' : 'warning' }}">Set status</button>
             </form>
         </td>
     </tr>

@@ -116,10 +116,16 @@ class TaskController extends Controller
         return redirect()->route('task.index')->with('success', 'Task deleted successfully');
     }
 
-    public function complete(Request $request, $id)
+    public function setStatus(Request $request, $id)
     {
-        Task::where('id', $id)->update(['completed' => 1]);
+        // dd($request->all());
 
+        $task = Task::where('id', $id)->update(['completed' => $request->is_completed ? 0 : 1]);
+        
+        $message = $request->is_completed ? 'Task set to incomplete' : 'Task completed successfully';
+        
+        return redirect()->back()->with('success', $message);
+        
         // TESTING:
         // dd(Task::where('id', $id)->first()->toSql());
 
@@ -128,6 +134,11 @@ class TaskController extends Controller
         // $task->completed = 1;
         // $task->save();
 
-        return redirect()->back()->with('success', 'Task completed successfully');
     }
+
+    // public function unComplete(Request $request, $id)
+    // {
+    //     Task::where('id', $id)->update(['completed' => 0]);
+    //     return redirect()->back()->with('success', 'Task set to incomplete');
+    // }
 }
