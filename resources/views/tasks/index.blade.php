@@ -11,6 +11,10 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
                 <!-- Other navigation links here -->
+                <form class="form-inline my-2 my-lg-0" method="GET" action="{{ route('task.search') }}">
+                    <input class="form-control mr-sm-2" type="search" placeholder="Search Tasks">
+                    <button class="btn btn-outline-light my-2 my-sm-0">Search</button>
+                </form>
                 @auth
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('task.index') }}">My Tasks</a>

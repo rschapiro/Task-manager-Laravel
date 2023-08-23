@@ -137,9 +137,11 @@ class TaskController extends Controller
 
     }
 
-    // public function unComplete(Request $request, $id)
-    // {
-    //     Task::where('id', $id)->update(['completed' => 0]);
-    //     return redirect()->back()->with('success', 'Task set to incomplete');
-    // }
+    public function search()
+    {
+        $searchText = $_GET['query'];
+        $tasks = Task::where('title', 'LIKE', '%'.$searchText.'%')->get();
+
+        return view('tasks.search', compact('tasks'));
+    }
 }
