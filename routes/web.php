@@ -33,7 +33,7 @@ Route::get('{id}', [TaskController::class], 'show')->name('task.show');
 Route::get('edit/{id}', [TaskController::class, 'edit'])->name('task.edit');
 Route::post('update/{id}', [TaskController::class, 'update'])->name('task.update');
 Route::post('{task}/destroy', [TaskController::class, 'destroy'])->name('task.destroy');
-Route::post('complete-task/{id}', [TaskController::class, 'setStatus'])->name('task.complete');
+Route::post('complete-task/{id}', [TaskController::class, 'setStatus'])->name('task.setStatus');
 
 
 // Route::prefix('tasks')->group(function(){

@@ -120,7 +120,7 @@ class TaskController extends Controller
     {
         // dd($request->all());
 
-        $task = Task::where('id', $id)->update(['completed' => $request->is_completed ? 0 : 1]);
+        Task::where('id', $id)->update(['completed' => $request->is_completed ? 0 : 1]);
         
         $message = $request->is_completed ? 'Task set to incomplete' : 'Task completed successfully';
         
