@@ -53,11 +53,11 @@ class TaskController extends Controller
      * @param \App\Models\Task $task
      * @return \Illuminate\Http\Response
      */
-    // public function show($taskId)
-    // {
-    //     $task = Task::where('id', $taskId)->first();
-    //     return view('task.show', ['task' => $task]);
-    // }
+    public function show($taskId)
+    {
+        $task = Task::where('id', $taskId)->first();
+        return view('tasks.show', ['task' => $task]);
+    }
 
     /**
      * Show the form for editing the specified resource.
@@ -120,7 +120,8 @@ class TaskController extends Controller
     {
         // dd($request->all());
 
-        $task = Task::where('id', $id)->update(['completed' => $request->is_completed ? 0 : 1]);
+        Task::where('id', $id)->update(['completed' => $request->is_completed ? 0 : 1]);
+        // Task::where('id', $id)->update(['completed_by' => $request->completed_by]);
         
         $message = $request->is_completed ? 'Task set to incomplete' : 'Task completed successfully';
         
@@ -136,9 +137,11 @@ class TaskController extends Controller
 
     }
 
-    // public function unComplete(Request $request, $id)
-    // {
-    //     Task::where('id', $id)->update(['completed' => 0]);
-    //     return redirect()->back()->with('success', 'Task set to incomplete');
-    // }
+    public function search()
+    {
+        $searchText = $_GET['query'];
+        $tasks = Task::where('title', 'LIKE', '%'.$searchText.'%')->get();
+
+        return view('tasks.search', compact('tasks'));
+    }
 }

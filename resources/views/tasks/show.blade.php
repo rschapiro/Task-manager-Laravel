@@ -17,13 +17,13 @@
     <div class="col-xs-12 col-sm-12 col-md-12">
         <div class="form-group">
             <strong>Title:</strong>
-            {{ $task->title }}
+            {{ @$task->title }}
         </div>
     </div>
     <div class="col-xs-12 col-sm-12 col-md-12">
         <div class="form-group">
             <strong>Description:</strong>
-            {{ $task->description }}
+            {{ @$task->description }}
         </div>
     </div>
 </div>
