@@ -12,8 +12,8 @@
             <ul class="navbar-nav ml-auto">
                 <!-- Other navigation links here -->
                 <form class="form-inline my-2 my-lg-0" method="GET" action="{{ route('task.search') }}">
-                    <input class="form-control mr-sm-2" type="search" placeholder="Search Tasks">
-                    <button class="btn btn-outline-light my-2 my-sm-0">Search</button>
+                    <input class="form-control mr-sm-2" type="search" placeholder="Search Tasks on this page" id="myInput">
+                    {{-- <button class="btn btn-outline-light my-2 my-sm-0">Search</button> --}}
                 </form>
                 @auth
                     <li class="nav-item">
@@ -55,7 +55,7 @@
     </div>
 @endif
 
-<table class="table table-bordered">
+<table class="table table-bordered" id="myTable">
     <tr>
         <th>ID</th>
         <th>Title</th>
@@ -98,5 +98,16 @@
 </table>
 
 {!! $tasks->links() !!}
+
+<script>
+    $(document).ready(function() {
+        $("#myInput").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $("#myTable tr").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+</script>
 
 @endsection
