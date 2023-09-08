@@ -15,7 +15,7 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-auto">
                     <!-- Other navigation links here -->
-                    <form class="form-inline my-2 my-lg-0" method="GET" action="{{ route('task.search') }}">
+                    <form id="taskForm" class="form-inline my-2 my-lg-0" method="GET" action="{{ route('task.search') }}">
                         <input class="form-control mr-sm-2" type="search" placeholder="Search Tasks on this page"
                             id="myInput">
                         {{-- <button class="btn btn-outline-light my-2 my-sm-0">Search</button> --}}
@@ -49,7 +49,7 @@
                 <h2>Tasks</h2>
             </div>
             <div class="pull-right">
-                <a class="btn btn-success" href="{{ route('task.create') }}">Add New Task</a>
+                <a class="btn btn-success" href="{{ route('task.create') }}" id="createNewTask">Add New Task</a>
             </div>
         </div>
     </div>
@@ -147,6 +147,7 @@
     </div>
     <!-- Modal End -->
 
+    <!-- Search Script Start -->
     <script>
         $(document).ready(function() {
             $("#myInput").on("keyup", function() {
@@ -157,5 +158,104 @@
             });
         });
     </script>
+    <!-- Search Script End -->
+
+    <!-- AJAX CRUD Start -->
+    <script type="text/javascripts">
+        $(function() {
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            var table = $('.data-table').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: "{{ route('tasks.index') }}",
+                columns: [{
+                        data: 'DT_RowIndex',
+                        name: 'DT_RowIndex'
+                    },
+                    {
+                        data: 'title',
+                        name: 'title'
+                    },
+                    {
+                        data: 'description',
+                        name: 'description'
+                    },
+                    {
+                        data: 'action',
+                        name: 'action',
+                        orderable: false,
+                        searchable: false
+                    }
+                ]
+            });
+
+            $('#createNewTask').click(function() {
+                $('#savedata').val("create-task");
+                $('#id').val('');
+                $('#taskForm').trigger("reset");
+                $('#modelHeading').html("Create New Task");
+                $('#ajaxModelexa').modal('show');
+            });
+
+            $('body').on('click', '.editTask', function() {
+                var id = $(this).data('id');
+                $.get("{{ route('tasks.index') }}" + '/' + id + '/edit', function(data) {
+                    $('#modelHeading').html("Edit Task");
+                    $('#savedata').val("edit-user");
+                    $('#ajaxModelexa').modal('show');
+                    $('#id').val(data.id);
+                    $('#title').val(data.title);
+                    $('#description').val(data.description);
+                })
+            });
+
+            $('#savedata').click(function (e) {
+                e.preventDefault();
+                $(this).html('Sending..');
+            
+                $.ajax({
+                  data: $('#taskForm').serialize(),
+                  url: "{{ route('tasks.store') }}",
+                  type: "POST",
+                  dataType: 'json',
+                  success: function (data) {
+             
+                      $('#taskForm').trigger("reset");
+                      $('#ajaxModelexa').modal('hide');
+                      table.draw();
+                 
+                  },
+                  error: function (data) {
+                      console.log('Error:', data);
+                      $('#savedata').html('Save Changes');
+                  }
+              });
+            });
+
+            $('body').on('click', '.deleteTask', function () {
+     
+                var id = $(this).data("id");
+                confirm("Are You sure want to delete this Task!");
+              
+                $.ajax({
+                    type: "DELETE",
+                    url: "{{ route('tasks.store') }}"+'/'+id,
+                    success: function (data) {
+                        table.draw();
+                    },
+                    error: function (data) {
+                        console.log('Error:', data);
+                    }
+                });
+            });
+        });
+    </script>
+    <!-- AJAX CRUD End -->
 
 @endsection
