@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Task;
 use App\Http\Requests\TaskRequest;
 use Illuminate\Http\Request;
-use Datatables;
 
 class TaskController extends Controller
 {
@@ -14,30 +13,10 @@ class TaskController extends Controller
      * 
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request){
-
-        if ($request->ajax()) {
-            $product = Task::latest()->get();
-            return Datatables::of($data)
-                    ->addIndexColumn()
-                    ->addColumn('action', function($row){
-   
-                           $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-primary btn-sm editProduct">Edit</a>';
-   
-                           $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Delete" class="btn btn-danger btn-sm deleteProduct">Delete</a>';
-    
-                            return $btn;
-                    })
-                    ->rawColumns(['action'])
-                    ->make(true);
-        }
-      
-        return view('productAjax',compact('product'));
-
-
-        // $tasks = Task::latest()->paginate(5);
-        // // return view('tasks.index', ['tasks' => $tasks]);
-        // return view('tasks.index', compact('tasks'))->with(request()->input('page'));
+    public function index(){
+        $tasks = Task::latest()->paginate(5);
+        // return view('tasks.index', ['tasks' => $tasks]);
+        return view('tasks.index', compact('tasks'))->with(request()->input('page'));
     }
 
     /**
