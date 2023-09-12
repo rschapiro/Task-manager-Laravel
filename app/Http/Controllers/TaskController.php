@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Task;
 use App\Http\Requests\TaskRequest;
 use Illuminate\Http\Request;
+use Datatables;
 
 class TaskController extends Controller
 {

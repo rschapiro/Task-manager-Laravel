@@ -77,7 +77,7 @@
                     <td>
                         <form action="{{ route('task.destroy', $task->id) }}" method="POST">
                             {{-- <a class="btn btn-info" href="{{ route('task.show', $task->id) }}">Show</a> --}}
-                            <a class="btn btn-primary" href="{{ route('task.edit', $task->id) }}">Edit</a>
+                            <a class="btn btn-primary" data-toggle="modal" data-target="#myEditModal">Edit</a>
                             @csrf
                             <button type="submit" class="btn btn-danger">Delete</button>
                         </form>
@@ -146,6 +146,48 @@
         </div>
     </div>
     <!-- Modal End -->
+
+    <!-- Edit Modal Start -->
+    <div id="myEditModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <form {{--  action="{{ route('task.update') }}" method="POST"  --}}>
+                        @csrf
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-12">
+                                <div class="form-group">
+                                    <strong>Title:</strong>
+                                    <input type="text" name="title" class="form-control" placeholder="Title"
+                                        value="{{ old('title') }}">
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-12">
+                                <div class="form-group">
+                                    <strong>Description:</strong>
+                                    {{-- <input type="text" name="description" class="form-control" placeholder="Description" value="{{ old('description') }}"> --}}
+                                    <textarea type="text" name="description" class="form-control" placeholder="Description" style="height:150px"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-12 text-center">
+                                <button type="submit" class="btn btn-primary">Update Task</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- Edit Modal End -->
 
     <!-- Search Script Start -->
     <script>
