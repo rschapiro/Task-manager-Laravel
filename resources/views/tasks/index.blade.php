@@ -9,13 +9,11 @@
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <!-- Trigger the modal with a button -->
-            <button type="button" class="btn btn-success btn-lg" data-toggle="modal" data-target="#myModal">Add New
-                Task</button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-auto">
                     <!-- Other navigation links here -->
-                    <form id="taskForm" class="form-inline my-2 my-lg-0" method="GET" action="{{ route('task.search') }}">
+                    <form id="taskForm" class="form-inline my-2 my-lg-0" method="GET"
+                        action="{{ route('task.search') }}">
                         <input class="form-control mr-sm-2" type="search" placeholder="Search Tasks on this page"
                             id="myInput">
                         {{-- <button class="btn btn-outline-light my-2 my-sm-0">Search</button> --}}
@@ -49,7 +47,11 @@
                 <h2>Tasks</h2>
             </div>
             <div class="pull-right">
-                <a class="btn btn-success" href="{{ route('task.create') }}" id="createNewTask">Add New Task</a>
+                {{-- Old button --}}
+                {{-- <a class="btn btn-success" href="{{ route('task.create') }}" id="createNewTask">Add New Task</a> --}}
+
+                <!-- Trigger the modal with a button -->
+                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal">Add New Task</button>
             </div>
         </div>
     </div>
@@ -202,6 +204,6 @@
     </script>
     <!-- Search Script End -->
 
-    
+
 
 @endsection
