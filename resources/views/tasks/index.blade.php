@@ -9,13 +9,11 @@
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <!-- Trigger the modal with a button -->
-            <button type="button" class="btn btn-success btn-lg" data-toggle="modal" data-target="#myModal">Add New
-                Task</button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-auto">
                     <!-- Other navigation links here -->
-                    <form class="form-inline my-2 my-lg-0" method="GET" action="{{ route('task.search') }}">
+                    <form id="taskForm" class="form-inline my-2 my-lg-0" method="GET"
+                        action="{{ route('task.search') }}">
                         <input class="form-control mr-sm-2" type="search" placeholder="Search Tasks on this page"
                             id="myInput">
                         {{-- <button class="btn btn-outline-light my-2 my-sm-0">Search</button> --}}
@@ -49,7 +47,12 @@
                 <h2>Tasks</h2>
             </div>
             <div class="pull-right">
-                <a class="btn btn-success" href="{{ route('task.create') }}">Add New Task</a>
+                {{-- Old button --}}
+                {{-- <a class="btn btn-success" href="{{ route('task.create') }}" id="createNewTask">Add New Task</a> --}}
+
+                <!-- Trigger the modal with a button -->
+                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal">Add New
+                    Task</button>
             </div>
         </div>
     </div>
@@ -77,7 +80,10 @@
                     <td>
                         <form action="{{ route('task.destroy', $task->id) }}" method="POST">
                             {{-- <a class="btn btn-info" href="{{ route('task.show', $task->id) }}">Show</a> --}}
-                            <a class="btn btn-primary" href="{{ route('task.edit', $task->id) }}">Edit</a>
+                            {{-- <a class="btn btn-primary" data-toggle="modal" data-target="#myEditModal">Modal Edit</a> --}}
+                            <a href="javascript:;" class="btn btn-primary" onclick="editTask({{$task}})" data-toggle="modal" 
+                            data-target="#myEditModal">Modal Edit</a>
+                            <a class="btn btn-success" href="{{ route('task.edit', $task->id) }}">Edit</a>
                             @csrf
                             <button type="submit" class="btn btn-danger">Delete</button>
                         </form>
@@ -105,7 +111,7 @@
 
     {!! $tasks->links() !!}
 
-    <!-- Modal Start -->
+    <!-- Create Modal Start -->
     <div id="myModal" class="modal fade" role="dialog">
         <div class="modal-dialog">
 
@@ -145,8 +151,52 @@
 
         </div>
     </div>
-    <!-- Modal End -->
+    <!-- Create Modal End -->
 
+    <!-- Edit Modal Start -->
+    <div id="myEditModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <form action="{{ route('task.updateModal') }}" method="POST">
+                        @csrf
+                        <input type="hidden" name="id">
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-12">
+                                <div class="form-group">
+                                    <strong>Title:</strong>
+                                    <input type="text" name="title" class="form-control" placeholder="Title"
+                                        value="{{ old('title') }}">
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-12">
+                                <div class="form-group">
+                                    <strong>Description:</strong>
+                                    {{-- <input type="text" name="description" class="form-control" placeholder="Description" value="{{ old('description') }}"> --}}
+                                    <textarea type="text" name="description" class="form-control" placeholder="Description" style="height:150px" id="task_description"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-12 text-center">
+                                <button type="submit" class="btn btn-primary">Update Task</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- Edit Modal End -->
+
+    <!-- Script Start -->
     <script>
         $(document).ready(function() {
             $("#myInput").on("keyup", function() {
@@ -156,6 +206,22 @@
                 });
             });
         });
+
+        let task;
+
+        function editTask(task) {
+            // $('#myEditModal').modal('toggle');
+            // $('#task_modal_heading').text('Edit Task / Service');
+            // $('#task_modal_btn').text('Update');
+            console.log(task);
+            $("input[name=id]").val(task.id);
+            $("input[name=title]").val(task.title);
+            // $("input[name=price]").val(product.price);
+            $("textarea#task_description").val(task.description);
+        }
     </script>
+    <!-- Script End -->
+
+
 
 @endsection

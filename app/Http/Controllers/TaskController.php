@@ -103,6 +103,30 @@ class TaskController extends Controller
         return redirect()->route('task.index')->with('success', 'Task updated successfully');
     }
 
+    public function updateModal(TaskRequest $request)
+    {
+        $task = Task::findOrFail($request->id);
+
+        $data = $request->validate([
+            'title' => 'required',
+            'description' => 'required'
+        ]);
+
+        $task->update($data);
+
+        // Validate the input data
+        // $validatedData = $request->validate([
+        //     'title' => 'required|max:255',
+        //     'description' => 'required',
+        // ]);
+        // Update the task with the validated data
+        // $task->update($validatedData);
+
+
+
+        return redirect()->route('task.index')->with('success', 'Task updated successfully');
+    }
+
     /**
      * Remove the specified resource from storage.
      * 
