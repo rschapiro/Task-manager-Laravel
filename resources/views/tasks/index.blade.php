@@ -51,7 +51,8 @@
                 {{-- <a class="btn btn-success" href="{{ route('task.create') }}" id="createNewTask">Add New Task</a> --}}
 
                 <!-- Trigger the modal with a button -->
-                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal">Add New Task</button>
+                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal">Add New
+                    Task</button>
             </div>
         </div>
     </div>
@@ -79,7 +80,10 @@
                     <td>
                         <form action="{{ route('task.destroy', $task->id) }}" method="POST">
                             {{-- <a class="btn btn-info" href="{{ route('task.show', $task->id) }}">Show</a> --}}
-                            <a class="btn btn-primary" data-toggle="modal" data-target="#myEditModal">Edit</a>
+                            {{-- <a class="btn btn-primary" data-toggle="modal" data-target="#myEditModal">Modal Edit</a> --}}
+                            <a href="javascript:;" class="btn btn-primary" onclick="editTask({{$task}})" data-toggle="modal" 
+                            data-target="#myEditModal">Modal Edit</a>
+                            <a class="btn btn-success" href="{{ route('task.edit', $task->id) }}">Edit</a>
                             @csrf
                             <button type="submit" class="btn btn-danger">Delete</button>
                         </form>
@@ -107,7 +111,7 @@
 
     {!! $tasks->links() !!}
 
-    <!-- Modal Start -->
+    <!-- Create Modal Start -->
     <div id="myModal" class="modal fade" role="dialog">
         <div class="modal-dialog">
 
@@ -147,7 +151,7 @@
 
         </div>
     </div>
-    <!-- Modal End -->
+    <!-- Create Modal End -->
 
     <!-- Edit Modal Start -->
     <div id="myEditModal" class="modal fade" role="dialog">
@@ -159,8 +163,9 @@
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
                 <div class="modal-body">
-                    <form {{--  action="{{ route('task.update') }}" method="POST"  --}}>
+                    <form action="{{ route('task.updateModal') }}" method="POST">
                         @csrf
+                        <input type="hidden" name="id">
                         <div class="row">
                             <div class="col-xs-12 col-sm-12 col-md-12">
                                 <div class="form-group">
@@ -173,7 +178,7 @@
                                 <div class="form-group">
                                     <strong>Description:</strong>
                                     {{-- <input type="text" name="description" class="form-control" placeholder="Description" value="{{ old('description') }}"> --}}
-                                    <textarea type="text" name="description" class="form-control" placeholder="Description" style="height:150px"></textarea>
+                                    <textarea type="text" name="description" class="form-control" placeholder="Description" style="height:150px" id="task_description"></textarea>
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-12 text-center">
@@ -191,7 +196,7 @@
     </div>
     <!-- Edit Modal End -->
 
-    <!-- Search Script Start -->
+    <!-- Script Start -->
     <script>
         $(document).ready(function() {
             $("#myInput").on("keyup", function() {
@@ -201,8 +206,21 @@
                 });
             });
         });
+
+        let task;
+
+        function editTask(task) {
+            // $('#myEditModal').modal('toggle');
+            // $('#task_modal_heading').text('Edit Task / Service');
+            // $('#task_modal_btn').text('Update');
+            console.log(task);
+            $("input[name=id]").val(task.id);
+            $("input[name=title]").val(task.title);
+            // $("input[name=price]").val(product.price);
+            $("textarea#task_description").val(task.description);
+        }
     </script>
-    <!-- Search Script End -->
+    <!-- Script End -->
 
 
 

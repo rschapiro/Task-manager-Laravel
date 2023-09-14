@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Task;
 use App\Http\Requests\TaskRequest;
 use Illuminate\Http\Request;
-use Datatables;
 
 class TaskController extends Controller
 {
@@ -83,6 +82,30 @@ class TaskController extends Controller
     {
         // dd($request->all() , $id);
         $task = Task::findOrFail($id);
+
+        $data = $request->validate([
+            'title' => 'required',
+            'description' => 'required'
+        ]);
+
+        $task->update($data);
+
+        // Validate the input data
+        // $validatedData = $request->validate([
+        //     'title' => 'required|max:255',
+        //     'description' => 'required',
+        // ]);
+        // Update the task with the validated data
+        // $task->update($validatedData);
+
+
+
+        return redirect()->route('task.index')->with('success', 'Task updated successfully');
+    }
+
+    public function updateModal(TaskRequest $request)
+    {
+        $task = Task::findOrFail($request->id);
 
         $data = $request->validate([
             'title' => 'required',
