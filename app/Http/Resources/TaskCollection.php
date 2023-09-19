@@ -14,6 +14,11 @@ class TaskCollection extends ResourceCollection
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        // return parent::toArray($request);
+
+        return [
+            'data' => $this->collection,
+            'version' => '0.1.1'
+        ];
     }
 }
