@@ -82,8 +82,8 @@
                             {{-- <a class="btn btn-info" href="{{ route('task.show', $task->id) }}">Show</a> --}}
                             {{-- <a class="btn btn-primary" data-toggle="modal" data-target="#myEditModal">Modal Edit</a> --}}
                             <a href="javascript:;" class="btn btn-primary" onclick="editTask({{$task}})" data-toggle="modal" 
-                            data-target="#myEditModal">Modal Edit</a>
-                            <a class="btn btn-success" href="{{ route('task.edit', $task->id) }}">Edit</a>
+                            data-target="#myEditModal">Edit</a>
+                            {{-- <a class="btn btn-success" href="{{ route('task.edit', $task->id) }}">Edit</a> --}}
                             @csrf
                             <button type="submit" class="btn btn-danger">Delete</button>
                         </form>
