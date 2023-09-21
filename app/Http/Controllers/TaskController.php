@@ -14,9 +14,21 @@ class TaskController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(){
-        $tasks = Task::latest()->paginate(5);
-        // return view('tasks.index', ['tasks' => $tasks]);
-        return view('tasks.index', compact('tasks'))->with(request()->input('page'));
+        // $tasks = Task::latest()->paginate(5);
+        // // return view('tasks.index', ['tasks' => $tasks]);
+        // return view('tasks.index', compact('tasks'))->with(request()->input('page'));
+
+        $tasks = Task::where('title', 'Hej')->get();
+
+        $tasks = Task::chunk(2, function($tasks) {
+            foreach($tasks as $task){
+                print_r($task);
+            }
+        });
+
+        return view('tasks.elo', [
+            'tasks' => $tasks
+        ]);
     }
 
     /**
