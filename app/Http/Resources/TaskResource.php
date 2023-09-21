@@ -18,10 +18,10 @@ class TaskResource extends JsonResource
 
         return [
             'id' => $this->id,
-            'title' => $this->title,
+            'title' => strtoupper($this->title),
             'description' => $this->description,
-            'completed' => $this->completed,
-            'updated_at' => $this->updated_at
+            'completed' => $this->completed == 1 ? 'Task completed' : 'Task pending',
+            'updated_at' => $this->updated_at->diffForHumans()
         ];
     }
 }

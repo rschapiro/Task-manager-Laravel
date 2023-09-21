@@ -82,6 +82,8 @@ class TaskApiController extends Controller
     {
         $task->delete();
 
-        return response()->json(null, Response::HTTP_NO_CONTENT);
+        // return response()->json(null, 204);
+
+        return response()->json(['code' => 200, 'message' => 'The specified task was deleted successfully', 'task' => $task], 200);
     }
 }
